@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="-gearman" basedir="../.." default="info">
+    <target name="info">
+        <echo message="Gearman service: Wraps the gearman commands." level="info" />
+    </target>
+
+    <target name="reload" if="${services.gearman.is-enabled}">
+        <echo message="Restarting gearman ..." level="info" />
+        <exec executable="sudo">
+            <arg line="service gearman-job-server restart"/>
+        </exec>
+    </target>
+</project>

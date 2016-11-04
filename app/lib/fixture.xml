@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="-fixture" basedir="." default="info">
+    <target name="-fixture.info">
+        <echo message="Fixture module: Loading fixtures to provide data for the application." level="info" />
+    </target>
+
+    <target name="-fixture.init" if="${app.fixture.is-enabled}">
+        <echo message="Initiating fixture loading ... " level="info" />
+        <echo message="Loading fixture set ${fixtures}" />
+        <exec executable="php" failonerror="true">
+            <arg line="${app.sf.app.console} doctrine:fixtures:load" />
+            <arg line="--env=${env}" />
+            <arg line="--fixtures=${app.fixture.dir}/${fixtures}" />
+        </exec>
+    </target>
+</project>

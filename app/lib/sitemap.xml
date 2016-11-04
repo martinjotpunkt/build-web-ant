@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="-sitemap" basedir="." default="info">
+    <target name="-sitemap.info" depends="-ugc.info">
+        <echo message="Sitemap module: Creates sitemap directory structure as well as the sitemap itself and refreshes it." level="info" />
+    </target>
+
+    <target name="-sitemap.install" depends="-ugc.install" if="${app.ugc.sitemap.is-enabled}">
+        <echo message="Setting up sitemap directory ..." level="info" />
+        <create-directory destination="${app.ugc.sitemap.source.dir}" sensitive="true" />
+        <link source="${app.ugc.sitemap.source.file}" destination="${app.ugc.sitemap.destination.file}" modifier="-sf" sensitive="true" />
+    </target>
+
+    <target name="-sitemap.clean">
+        <remove-recursive target="${app.ugc.sitemap.source.dir}/*" sensitive="false" />
+    </target>
+
+    <target name="-sitemap.uninstall" if="${app.ugc.sitemap.is-enabled}">
+        <echo message="Initiating sitemap directory ..." level="info" />
+        <remove-single target="${app.ugc.sitemap.destination.file}" sensitive="false" />
+        <remove-recursive target="${app.ugc.sitemap.source.dir}" sensitive="false" />
+    </target>
+</project>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="-csslint" basedir="../.." default="info">
+    <target name="info">
+        <echo message="csslint module: Running CSSLint on all configured css files." level="info" />
+    </target>
+
+    <target name="test">
+        <echo message="Running csslint on all css files in ${qa.csslint.dir} ..." level="info" />
+        <exec executable="csslint" failonerror="false">
+            <arg line="--errors=${qa.csslint.errors}" />
+            <arg line="--warnings=${qa.csslint.warnings}" />
+            <arg line="${qa.csslint.dir}" />
+        </exec>
+    </target>
+</project>

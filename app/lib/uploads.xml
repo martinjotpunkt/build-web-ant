@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="-uploads" basedir="." default="info">
+    <target name="info" depends="-ugc.info">
+        <echo message="Upload module: Creates and maintains the upload directory of the Project." level="info" />
+    </target>
+
+    <target name="-uploads.install" depends="-ugc.install" if="${app.logs.is-enabled}">
+        <echo message="Installing upload directory ..." level="info" />
+        <create-directory destination="${app.ugc.uploads.source}" />
+        <move-contents source="${app.ugc.uploads.destination}" destination="${app.ugc.uploads.source}" sensitive="false"/>
+        <remove-recursive target="${app.ugc.uploads.destination}" sensitive="false" />
+        <link source="${app.ugc.uploads.source}" destination="${app.ugc.uploads.destination}" />
+    </target>
+
+    <target name="-uploads.uninstall" if="${app.logs.is-enabled}">
+        <echo message="Removing upload directory ..." level="info" />
+        <remove-single target="${app.ugc.uploads.destination}" sensitive="false" />
+        <remove-recursive target="${app.ugc.uploads.source}" sensitive="false" />
+    </target>
+
+    <target name="-uploads.clean">
+        <remove-recursive target="${app.ugc.uploads.source}/*" sensitive="false" />
+    </target>
+</project>

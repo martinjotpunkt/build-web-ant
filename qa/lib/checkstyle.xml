@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="-checkstyle" basedir="../.." default="info">
+    <target name="info">
+        <echo message="Checkstyle module: Running checkstyle." level="info" />
+    </target>
+
+    <target name="test" depends="php">
+        <echo message="Ran every configured checkstyle." level="info" />
+    </target>
+
+    <target name="php">
+        <echo message="Running PHP-checkstyle for ${qa.checkstyle.php.dir} ..." level="info" />
+        <exec executable="phpcs" failonerror="false">
+            <arg line="--report=${qa.checkstyle.php.report}" />
+            <arg line="--standard=${qa.checkstyle.php.standard}" />
+            <arg line="${qa.checkstyle.php.ignore}" />
+            <arg line="--extensions=${qa.checkstyle.php.extension}" />
+            <arg line="${qa.checkstyle.php.dir}" />
+        </exec>
+    </target>
+</project>

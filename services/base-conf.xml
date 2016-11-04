@@ -1,0 +1,17 @@
+<services>
+    <apache>
+        <is-enabled>true</is-enabled>
+    </apache>
+    <memcache>
+        <is-enabled>true</is-enabled>
+    </memcache>
+    <varnish>
+        <is-enabled>true</is-enabled>
+    </varnish>
+    <supervisor>
+        <is-enabled>true</is-enabled>
+    </supervisor>
+    <gearman>
+        <is-enabled>true</is-enabled>
+    </gearman>
+</services>

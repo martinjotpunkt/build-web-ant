@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="-bootstrap" basedir="." default="info">
+    <target name="-bootstrap.info">
+        <echo message="Bootstrap module: Creating a bootstrap-file with sensio's bootstrap-file-generator." level="info" />
+    </target>
+
+    <target name="-bootstrap.init" if="${app.sf.bootstrap.is-enabled}">
+        <echo message="Setting up sf bootstrap file ..." level="info" />
+        <exec executable="php" failonerror="true">
+            <arg line="${app.sf.bootstrap.source} ${app.sf.bootstrap.destination}" />
+        </exec>
+    </target>
+
+    <target name="-bootstrap.clean">
+        <echo message="Removing sf bootstrap file ..." level="info" />
+        <remove-single target="${app.sf.bootstrap.destination}/${app.sf.bootstrap.file}" sensitive="false" />
+    </target>
+
+    <target name="-bootstrap.refresh" depends="-bootstrap.clean, -bootstrap.init">
+        <echo message="Refreshed sf bootstrap file." level="info" />
+    </target>
+</project>

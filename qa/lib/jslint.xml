@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="-jslint" basedir="../.." default="info">
+    <target name="info">
+        <echo message="JSLint module: Running JSLint on all configured js files" level="info" />
+    </target>
+
+    <target name="test">
+        <exec executable="bash" failonerror="false">
+            <arg line='c "find ${qa.jslint.dir} --name "*.js" --print0 | xargs -0 jslint\"' />
+        </exec>
+    </target>
+</project>

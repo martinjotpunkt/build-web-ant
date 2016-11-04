@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="-assets" basedir="." default="info">
+    <macrodef name="dump">
+        <attribute name="console" />
+        <attribute name="environment" default="dev" />
+        <attribute name="sensitive" default="true" />
+        <sequential>
+            <exec executable="php" failonerror="@{sensitive}">
+                <arg line="@{console} assetic:dump --env=@{environment}" />
+            </exec>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="install">
+        <attribute name="console" />
+        <attribute name="destination" />
+        <attribute name="environment" default="dev" />
+        <attribute name="symlink" default="--symlink" />
+        <attribute name="sensitive" default="true" />
+        <sequential>
+            <exec executable="php" failonerror="@{sensitive}">
+                <arg line="@{console} assets:install @{destination} --env=@{environment} @{symlink}" />
+            </exec>
+        </sequential>
+    </macrodef>
+
+
+    <target name="-assets.info">
+        <echo message="Asset module: Installing asset files from bundle and dumping configured assetic files." level="info" />
+    </target>
+
+    <target name="-assets.install">
+        <echo message="Initiating asset generation ..." level="info" />
+        <install console="${app.sf.app.console}" environment="${env}" destination="${app.sf.web.dir}" />
+    </target>
+
+    <target name="-assets.init">
+        <echo message="Initiating asset generation ..." level="info" />
+        <dump console="${app.sf.app.console}" environment="${env}" />
+    </target>
+</project>

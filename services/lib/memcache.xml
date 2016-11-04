@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="-memcache" basedir="../.." default="info">
+    <target name="info">
+        <echo message="Memcache service: Wraps the memcached commands." level="info" />
+    </target>
+
+    <target name="reload" if="${services.memcache.is-enabled}">
+        <echo message="Restarting memcache ..." level="info"/>
+        <exec executable="sudo">
+            <arg line="service memcached restart" />
+        </exec>
+    </target>
+</project>

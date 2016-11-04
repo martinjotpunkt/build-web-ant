@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="-qa" basedir=".." default="info">
+    <xmlproperty file="qa/${host}-conf.xml"  collapseAttributes="true" semanticAttributes="true" />
+
+    <import file="lib/checkstyle.xml" />
+    <import file="lib/csslint.xml" />
+    <import file="lib/jslint.xml" />
+    <import file="lib/phpunit.xml" />
+
+    <target name="configure">
+        <copy-file source="qa/base-conf.xml" destination="qa/${host}-conf.xml" sensitive="true" />
+    </target>
+
+    <target name="info" depends="-checkstyle.info, -csslint.info, -jslint.info, -phpunit.info">
+        <echo message="QA: Configuring and wrapping all qa modules." level="info" />
+    </target>
+
+    <target name="test" depends="-checkstyle.test, -csslint.test, -jslint.test, -phpunit.test">
+        <echo message="Ran all configured tests." level="info" />
+    </target>
+</project>

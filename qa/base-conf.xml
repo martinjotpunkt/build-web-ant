@@ -1,0 +1,23 @@
+<qa>
+    <checkstyle>
+        <php>
+            <dir>${docroot}/src</dir>
+            <extension>php</extension>
+            <report>checkstyle</report>
+            <standard>Mindworks</standard>
+            <ignore>--ignore="*/Tests/*" --ignore="*/TestsFunctional/*"</ignore>
+        </php>
+    </checkstyle>
+    <csslint>
+        <dir>${docroot}/web/bundles/css</dir>
+        <errors>important,errors,empty-rules,import,ids,shorthand,universal-selector,zero-units,overqualified-elements,unqualified-attributes,known-properties,adjoining-classes,duplicate-background-images,duplicate-properties,selector-max-approaching,floats,font-faces,font-sizes,selector-max,qualified-headings,rules-count,unique-headings</errors>
+        <warnings>box-sizing,box-model,display-property-grouping,bulletproof-font-face,compatible-vendor-prefixes,regex-selectors,gradients,fallback-colors,star-property-hack,outline-none,underscore-property-hack,text-indent,vendor-prefix</warnings>
+    </csslint>
+    <jslint>
+        <dir>${docroot}/web/assets/bundles/js</dir>
+    </jslint>
+    <phpunit>
+        <func-config>${docroot}/app/phpunit_func.xml</func-config>
+        <unit-config>${docroot}/app/phpunit.xml</unit-config>
+    </phpunit>
+</qa>

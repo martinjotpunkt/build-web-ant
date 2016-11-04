@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="-ugc" basedir="." default="info">
+    <target name="-ugc.info">
+        <echo message="UGC module: Creates and maintains the directory the the projects user generated content." level="info" />
+    </target>
+
+    <target name="-ugc.install">
+        <echo message="Setting up ugc directory ..." level="info" />
+        <create-directory destination="${app.ugc.dir}" sensitive="true" />
+    </target>
+
+    <target name="-ugc.uninstall" depends="-uploads.uninstall, -sitemap.uninstall">
+        <echo message="Removing ugc directory ..." level="info" />
+        <remove-recursive target="${app.ugc.dir}" sensitive="false" />
+    </target>
+</project>

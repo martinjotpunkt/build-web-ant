@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="-apache" basedir="../.." default="info">
+    <target name="info">
+        <echo message="Apache service: Wraps the web-server commands." level="info" />
+    </target>
+
+    <target name="reload" if="${services.apache.is-enabled}">
+        <echo message="Reloading webserver to prevent APC glitches ..." level="info" />
+        <exec executable="sudo">
+            <arg line="apache2ctl graceful" />
+        </exec>
+    </target>
+</project>

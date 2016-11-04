@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="-supervisor" basedir="../.." default="info">
+    <target name="info">
+        <echo message="Supervisor service: Wraps the supervisor control-system commands."  level="info" />
+    </target>
+
+    <target name="reload" if="${services.supervisor.is-enabled}">
+        <echo message="Restarting supervisor ..." level="info" />
+        <exec executable="sudo">
+            <arg line="service supervisor restart" />
+        </exec>
+    </target>
+</project>

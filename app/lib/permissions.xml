@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="-permissions" basedir="." default="info">
+    <target name="info">
+        <echo message="Permissions module: Maintaining permissions for each of the modules ..." level="info" />
+    </target>
+
+    <target name="-permissions.symfony-console">
+        <executable file="${app.sf.app.console}" />
+    </target>
+
+    <target name="-permissions.cache-dir">
+        <total-access dir="${app.cache.source}" />
+    </target>
+
+    <target name="-permissions.log-dir">
+        <total-access dir="${app.logs.source}" />
+    </target>
+</project>

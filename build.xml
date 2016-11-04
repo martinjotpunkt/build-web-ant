@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="build" basedir="." default="info">
+    <property name="docroot" value="../../site" />
+    <property name="env" value="dev" />
+    <property name="host" value="local" />
+    <property name="fixtures" value="Development" />
+    <property name="tag" value="" />
+
+    <include file="helper/filesystem.xml" />
+
+    <import file="app/app.xml" />
+    <import file="services/services.xml" />
+    <import file="qa/qa.xml" />
+
+    <target name="build" depends="-app.build, -app.refresh, -services.reload" description="Set up the application for the current environment.">
+        <echo message="Build complete." level="info" />
+    </target>
+
+    <target name="clean" depends="-app.clean" description="Remove all content generated through the application (cache, assets, database, ugc ...).">
+        <echo message="Clean complete." level="info" />
+    </target>
+
+    <target name="configure" depends="-app.configure, -services.configure, -qa.configure" description="Create configuration files from each section's base-conf.">
+        <echo message="Configuration complete." level="info" />
+    </target>
+
+    <target name="info" depends="-app.info, -qa.info, -services.info" description="Show all module's information." />
+
+    <target name="install" depends="-app.install" description="Set up folder structure on server and build the project.">
+        <echo message="Installing complete." level="info" />
+    </target>
+
+    <target name="rebuild" depends="clean, build" description="Tear down and set up the application again for a fresh start." />
+
+    <target name="refresh" depends="-app.refresh, -services.reload" description="Refresh all temp data (stylesheets, cache ...) and the services (apache, varnish ...).">
+        <echo message="Refresh complete." level="info" />
+    </target>
+
+    <target name="rollback" depends="refresh" description="Revert the project to a previous version.">
+        <echo message="Rollback complete." level="info" />
+    </target>
+
+    <target name="tag" description="Update the application to a newer version.">
+        <echo message="Tagging complete." level="info" />
+    </target>
+
+    <target name="test" depends="-qa.test" description="Run all configured tests on the application.">
+        <echo message="Build complete." level="info" />
+    </target>
+
+    <target name="uninstall" depends="-app.uninstall" description="Tear down the project and remove it from the server.">
+        <echo message="Uninstalling complete." level="info" />
+    </target>
+
+    <target name="update" depends="refresh" description="Update the application to a newer version.">
+        <echo message="Updating complete." level="info" />
+    </target>
+</project>

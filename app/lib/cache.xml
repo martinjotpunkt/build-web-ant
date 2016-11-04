@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="-cache" basedir="." default="info">
+    <target name="-cache.info">
+        <echo message="Cache module: Creating and maintinging the cache directory." level="info" />
+    </target>
+
+    <target name="-cache.install" if="${app.cache.is-enabled}">
+        <echo message="Setting up cache directory ..." level="info" />
+        <create-directory destination="${app.cache.source}" sensitive="false" />
+        <move-contents source="${app.cache.destination}" destination="${app.cache.source}" sensitive="true"/>
+        <remove-recursive target="${app.cache.destination}" sensitive="false" />
+        <link source="${app.cache.source}" destination="${app.cache.destination}" />
+    </target>
+
+    <target name="-cache.clean">
+        <remove-recursive target="${app.cache.source}/*" sensitive="false" />
+    </target>
+
+    <target name="-cache.refresh">
+        <echo message="Clearing ${env}-cache" level="info" />
+        <exec executable="php" failonerror="true">
+            <arg line="${app.sf.app.console} cache:clear --env=${env}" />
+        </exec>
+    </target>
+
+    <target name="-cache.uninstall">
+        <echo message="Removing cache directory and symlink ..." level="info" />
+        <remove-single target="${app.cache.destination}" sensitive="false" />
+        <remove-recursive target="${app.cache.source}" sensitive="false" />
+        <create-directory destination="${app.cache.destination}" sensitive="false" />
+    </target>
+</project>

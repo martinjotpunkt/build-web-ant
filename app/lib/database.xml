@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="-database" basedir="." default="info">
+
+    <target name="-database.info">
+        <echo message="Database module: Creating and maintaining the application's databases." level="info" />
+    </target>
+
+    <target name="-database.install">
+        <echo message="Creating ${env}-database" level="info" />
+        <exec executable="php" failonerror="true">
+            <arg line="${app.sf.app.console} doctrine:database:create --env=${env}" />
+        </exec>
+    </target>
+
+    <target name="-database.init">
+        <echo message="Creating ${env}-schema" level="info" />
+        <exec executable="php" failonerror="true">
+            <arg line="${app.sf.app.console} doctrine:schema:create --env=${env}" />
+        </exec>
+    </target>
+
+    <target name="-database.clean">
+        <echo message="Dropping ${env}-model" level="info" />
+        <exec executable="php" failonerror="false">
+            <arg line="${app.sf.app.console} doctrine:schema:drop --force --env=${env}" />
+        </exec>
+    </target>
+
+    <target name="-database.uninstall">
+        <echo message="Dropping ${env}-database" level="info" />
+        <exec executable="php" failonerror="false">
+            <arg line="${app.sf.app.console} doctrine:database:drop --force --env=${env}" />
+        </exec>
+    </target>
+</project>

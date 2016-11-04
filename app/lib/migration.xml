@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="-migration" basedir="." default="info">
+    <target name="-migration.info">
+        <echo message="Migration module: Wrapping the doctrine migration commands." level="info" />
+    </target>
+
+    <target name="-migration.fix" if="${app.migration.mw-bundle.is-enabled}">
+        <echo message="Fixing migrations for ${env}-database" level="info" />
+        <exec executable="php" failonerror="true">
+            <arg line="${app.sf.app.console} mw:migrations:fixup --env=${env}" />
+        </exec>
+    </target>
+
+    <target name="-migration.migrate" if="${app.migration.is-enabled}">
+        <echo message="Migrating ${env}-database" level="info" />
+        <exec executable="php" failonerror="true">
+            <arg line="${app.sf.app.console} doctrine:migrations:migrate --env=${env}" />
+        </exec>
+    </target>
+</project>

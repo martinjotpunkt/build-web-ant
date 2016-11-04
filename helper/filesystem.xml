@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="-filesystem" basedir=".." default="info">
+    <macrodef name="create-directory">
+        <attribute name="destination" />
+        <attribute name="sensitive" default="true" />
+        <sequential>
+            <echo message="Creating directory in @{destination}" level="info" />
+            <exec executable="mkdir" failonerror="@{sensitive}">
+                <arg line="-p @{destination}" />
+            </exec>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="remove-single">
+        <attribute name="target" />
+        <attribute name="sensitive" default="true" />
+        <sequential>
+            <echo message="Removing @{target}" level="info" />
+            <exec executable="rm" failonerror="@{sensitive}">
+                <arg line="@{target}" />
+            </exec>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="remove-recursive">
+        <attribute name="target" />
+        <attribute name="sensitive" default="true" />
+        <sequential>
+            <echo message="Removing @{target} recursively" level="info" />
+            <exec executable="rm" failonerror="@{sensitive}">
+                <arg line="-Rf" />
+                <arg line="@{target}" />
+            </exec>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="link">
+        <attribute name="source" />
+        <attribute name="destination" />
+        <attribute name="modifier" default="-s" />
+        <attribute name="sensitive" default="true" />
+        <sequential>
+            <echo message="Linking @{destination} to @{source}" level="info" />
+            <exec executable="ln" failonerror="@{sensitive}">
+                <arg line="@{modifier}" />
+                <arg line="@{source}" />
+                <arg line="@{destination}" />
+            </exec>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="move-contents">
+        <attribute name="source" />
+        <attribute name="destination" />
+        <attribute name="sensitive" default="true" />
+        <sequential>
+            <echo message="Moving all content from @{source} to @{destination}" level="info" />
+            <move todir="@{destination}" failonerror="@{sensitive]">
+              <fileset dir="@{source}">
+                <include name="*"/>
+              </fileset>
+            </move>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="copy-file">
+        <attribute name="source" />
+        <attribute name="destination" />
+        <attribute name="sensitive" default="true" />
+        <sequential>
+            <echo message="Copying @{source} to @{destination}" level="info" />
+            <copy file="@{source}" tofile="@{destination}" failonerror="@{sensitive}" />
+        </sequential>
+    </macrodef>
+
+    <macrodef name="has-file">
+        <attribute name="file" />
+        <attribute name="message" />
+        <sequential>
+            <fail message="@{message}">
+                <condition>
+                    <not>
+                        <available file="@{file}" />
+                    </not>
+                </condition>
+            </fail>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="executable">
+        <attribute name="file" />
+        <sequential>
+            <echo message="Making @{file} executable ..." level="info" />
+            <chmod file="@{file}" perm="+x" type="file"/>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="total-access">
+        <attribute name="dir" />
+        <sequential>
+            <echo message="Granting total access on @{dir}  ..." level="warn" />
+            <chmod file="@{dir}" perm="777" type="dir"/>
+        </sequential>
+    </macrodef>
+</project>

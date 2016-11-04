@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="-app.-app" basedir="." default="info">
+    <xmlproperty file="app/${host}-conf.xml" collapseAttributes="true" semanticAttributes="true" />
+
+    <import file="lib/assets.xml" />
+    <import file="lib/bootstrap.xml" />
+    <import file="lib/cache.xml" />
+    <import file="lib/database.xml" />
+    <import file="lib/fixture.xml" />
+    <import file="lib/logs.xml" />
+    <import file="lib/migration.xml" />
+    <import file="lib/sitemap.xml" />
+    <import file="lib/ugc.xml" />
+    <import file="lib/uploads.xml" />
+
+    <target name="-app.info" depends="-bootstrap.info, -cache.info, -logs.info, -ugc.info, -assets.info, -database.info, -migration.info, -fixture.info" />
+
+    <target name="-app.configure">
+        <copy-file source="app/base-conf.xml" destination="app/${host}-conf.xml" sensitive="true" />
+    </target>
+
+    <target name="-app.has-configuration">
+        <has-file file="app/${host}-conf.xml" message="Missing ${basedir}/app/${host}-conf.xml" />
+    </target>
+
+    <target name="-app.install" depends="-app.has-configuration, -bootstrap.init, -cache.install, -logs.install, -uploads.install, -sitemap.install, -database.install, -assets.install" />
+
+    <target name="-app.build" depends="-app.has-configuration, -database.init, -assets.init, -migration.fix, -fixture.init" />
+
+    <target name="-app.clean" depends="-app.has-configuration, -database.clean, -cache.clean, -uploads.clean, -sitemap.clean" />
+
+    <target name="-app.uninstall" depends="-database.uninstall, -ugc.uninstall, -cache.uninstall, -logs.uninstall" />
+
+    <target name="-app.refresh" depends="-app.has-configuration, -bootstrap.refresh, -cache.refresh, -assets.init" />
+</project>

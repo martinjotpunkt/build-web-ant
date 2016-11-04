@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="-services" basedir=".." default="info">
+    <import file="lib/apache.xml" />
+    <import file="lib/gearman.xml" />
+    <import file="lib/memcache.xml" />
+    <import file="lib/supervisor.xml" />
+    <import file="lib/varnish.xml" />
+
+    <xmlproperty file="services/${host}-conf.xml" collapseAttributes="true" semanticAttributes="true" />
+
+    <target name="info" depends="-apache.info, -gearman.info, -memcache.info, -supervisor.info, -varnish.info">
+        <echo message="Services: Configuring and wrapping all service modules." level="info" />
+    </target>
+
+    <target name="configure">
+        <copy-file source="services/base-conf.xml" destination="services/${host}-conf.xml" sensitive="true" />
+    </target>
+
+    <target name="reload" depends="-apache.reload, -varnish.reload, -memcache.reload, -gearman.reload, -supervisor.reload">
+        <echo message="Reloaded configured services." level="info" />
+    </target>
+</project>

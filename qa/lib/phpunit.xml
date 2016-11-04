@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="-phpunit" basedir="../.." default="info">
+    <macrodef name="phpunit">
+        <attribute name="config" />
+        <attribute name="sensitive" default="true" />
+        <sequential>
+            <echo message="Running PHPUnit with @{config} ..." level="info" />
+            <exec executable="phpunit" failonerror="true">
+                <arg line="--configuration @{config}" />
+            </exec>
+        </sequential>
+    </macrodef>
+
+    <target name="info">
+        <echo message="PHPUnit module: Running configured PHPUnit-tests." />
+    </target>
+
+    <target name="test">
+        <phpunit config="${qa.phpunit.unit-config}" sensitive="false" />
+        <phpunit config="${qa.phpunit.func-config}" sensitive="false" />
+    </target>
+</project>
